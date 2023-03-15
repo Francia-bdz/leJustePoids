@@ -49,7 +49,7 @@ var collisionMask = 0x0004
 var ignoreMask = 0x0008
 
 
-
+var weight = randomIntFromInterval(17, 40)
 
 // plateau de la balance
 // Bodies.rectangle(xCentre, yCentre, largeur, hauteur[, options])
@@ -92,6 +92,9 @@ var etagere3 = Bodies.rectangle(window.innerWidth - 50, 300, 100, 20, { isStatic
 var etagere4 = Bodies.rectangle(window.innerWidth - 50, 400, 100, 20, { isStatic: true, collisionFilter: { category: collisionMask }, render: { fillStyle: '#0000ff' } }); // poids 1
 var etagere5 = Bodies.rectangle(window.innerWidth - 50, 500, 100, 20, { isStatic: true, collisionFilter: { category: collisionMask }, render: { fillStyle: '#0000ff' } }); // poids 1
 
+var ruche = Bodies.rectangle(120, 50, 150, 150, { mass: weight, collisionFilter: { category: collisionMask }, render: { fillStyle: '#ff00ff' } }); // poids 1
+
+
 Composite.add(world, [
     ground,
     plateau,
@@ -109,6 +112,8 @@ Composite.add(world, [
     etagere3,
     etagere4,
     etagere5,
+
+    ruche,
 
     // poteaux central
     Bodies.rectangle(270, 535, 20, 80, { isStatic: true, collisionFilter: { mask: collisionMask }, render: { fillStyle: '#ff0000' } }),
@@ -163,6 +168,8 @@ Animate();
 
 function Animate() {
 
+    Matter.Body.setPosition(ruche, Matter.Vector.create(120, ruche.position.y))
+
     if (plateau.angle < -0.02) {
         Matter.Body.setAngle(plateau, plateau.angle + 0.003)
 
@@ -172,6 +179,7 @@ function Animate() {
 
     Matter.Body.setInertia(edgeLeft, Infinity)
     Matter.Body.setInertia(edgeRight, Infinity)
+    Matter.Body.setInertia(ruche, Infinity)
 
     if (poid1.position.x < window.innerWidth - 100) {
         Composite.add(world, [
@@ -208,3 +216,6 @@ function Animate() {
     window.requestAnimationFrame(Animate);
 }
 
+function randomIntFromInterval(min, max) { // min and max included 
+    return Math.floor(Math.random() * (max - min + 1) + min)
+  }
