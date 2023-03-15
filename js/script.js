@@ -4,6 +4,8 @@
 // examples
 // https://brm.io/matter-js/demo/#car
 
+
+
 var Engine = Matter.Engine,
     Render = Matter.Render,
     Runner = Matter.Runner,
@@ -22,10 +24,10 @@ var engine = Engine.create(),
 
 // create renderer
 var render = Render.create({
-    element: document.body,
+    element: document.querySelector(".jeu"),
     engine: engine,
     options: {
-        width: 800,
+        width: window.innerWidth,
         height: 600,
         showAngleIndicator: true,   // debug
         showCollisions: true,       // debug
@@ -41,7 +43,7 @@ var runner = Runner.create();
 Runner.run(runner, engine);
 
 // Masks
-var toIgnoreMask = 0x0001
+var defaultMask = 0x0001
 var clickableMask = 0x0002
 var collisionMask = 0x0004
 var ignoreMask = 0x0008
@@ -51,7 +53,7 @@ var ignoreMask = 0x0008
 
 // plateau de la balance
 // Bodies.rectangle(xCentre, yCentre, largeur, hauteur[, options])
-var xPlateau = 400;
+var xPlateau = 270;
 var yPlateau = 520;
 var wPlateau = 400;
 var hPlateau = 20;
@@ -67,7 +69,7 @@ var edgeRight = Bodies.rectangle(xPlateau + xOffSeteR, yPlateau + yOffSet, wSqua
 
 
 // sol
-var ground = Bodies.rectangle(400, 600, 800, 50.5, { collisionFilter: { category: collisionMask }, isStatic: true, render: { fillStyle: '#ff0000' } });
+var ground = Bodies.rectangle(window.innerWidth / 2, 600, window.innerWidth, 50.5, { collisionFilter: { category: collisionMask }, isStatic: true, render: { fillStyle: '#ff0000', opacity: 1 } });
 
 
 
@@ -78,20 +80,38 @@ var ground = Bodies.rectangle(400, 600, 800, 50.5, { collisionFilter: { category
 //     render: { fillStyle: '#ff0000' }
 // }
 
-var poid1 = Bodies.rectangle(300, 495, 30, 30, { mass: 2, collisionFilter: { category: collisionMask | clickableMask}, render: { fillStyle: '#ff00ff' } }); // poids 1
-var poid2 = Bodies.rectangle(500, 495, 30, 30, { mass: 2, collisionFilter: { category: collisionMask | clickableMask}, render: { fillStyle: '#0000ff' } }); // poids 1
+var poid1 = Bodies.rectangle(window.innerWidth - 50, 50, 10, 10, { mass: 0.5, collisionFilter: { category: collisionMask | clickableMask }, render: { fillStyle: '#ff00ff' } }); // poids 1
+var poid2 = Bodies.rectangle(window.innerWidth - 50, 150, 20, 20, { mass: 1, collisionFilter: { category: collisionMask | clickableMask }, render: { fillStyle: '#ff00ff' } }); // poids 1
+var poid3 = Bodies.rectangle(window.innerWidth - 50, 250, 30, 30, { mass: 2, collisionFilter: { category: collisionMask | clickableMask }, render: { fillStyle: '#0000ff' } }); // poids 1
+var poid4 = Bodies.rectangle(window.innerWidth - 50, 350, 40, 40, { mass: 5, collisionFilter: { category: collisionMask | clickableMask }, render: { fillStyle: '#0000ff' } }); // poids 1
+var poid5 = Bodies.rectangle(window.innerWidth - 50, 450, 50, 50, { mass: 10, collisionFilter: { category: collisionMask | clickableMask }, render: { fillStyle: '#0000ff' } }); // poids 1
 
+var etagere1 = Bodies.rectangle(window.innerWidth - 50, 100, 100, 20, { isStatic: true, collisionFilter: { category: collisionMask }, render: { fillStyle: '#0000ff' } }); // poids 1
+var etagere2 = Bodies.rectangle(window.innerWidth - 50, 200, 100, 20, { isStatic: true, collisionFilter: { category: collisionMask }, render: { fillStyle: '#0000ff' } }); // poids 1
+var etagere3 = Bodies.rectangle(window.innerWidth - 50, 300, 100, 20, { isStatic: true, collisionFilter: { category: collisionMask }, render: { fillStyle: '#0000ff' } }); // poids 1
+var etagere4 = Bodies.rectangle(window.innerWidth - 50, 400, 100, 20, { isStatic: true, collisionFilter: { category: collisionMask }, render: { fillStyle: '#0000ff' } }); // poids 1
+var etagere5 = Bodies.rectangle(window.innerWidth - 50, 500, 100, 20, { isStatic: true, collisionFilter: { category: collisionMask }, render: { fillStyle: '#0000ff' } }); // poids 1
 
 Composite.add(world, [
     ground,
     plateau,
     edgeLeft,
     edgeRight,
+
     poid1,
     poid2,
+    poid3,
+    poid4,
+    poid5,
+
+    etagere1,
+    etagere2,
+    etagere3,
+    etagere4,
+    etagere5,
 
     // poteaux central
-    Bodies.rectangle(400, 535, 20, 80, { isStatic: true, collisionFilter: { group: -1, mask: 0 }, render: { fillStyle: '#ff0000' } }),
+    Bodies.rectangle(270, 535, 20, 80, { isStatic: true, collisionFilter: { mask: collisionMask }, render: { fillStyle: '#ff0000' } }),
 
     // Bodies.circle(560, 100, 50, { density: 0.005 }),
 
@@ -139,16 +159,6 @@ Composite.add(world, mouseConstraint);
 render.mouse = mouse;
 
 
-// fit the render viewport to the scene
-Render.lookAt(render, {
-    min: { x: 0, y: 0 },
-    max: { x: 800, y: 600 }
-});
-
-
-
-console.log(plateau.collisionFilter.mask)
-
 Animate();
 
 function Animate() {
@@ -163,9 +173,38 @@ function Animate() {
     Matter.Body.setInertia(edgeLeft, Infinity)
     Matter.Body.setInertia(edgeRight, Infinity)
 
-    
+    if (poid1.position.x < window.innerWidth - 100) {
+        Composite.add(world, [
+            poid1 = Bodies.rectangle(window.innerWidth - 50, 50, 10, 10, { mass: 0.5, collisionFilter: { category: collisionMask | clickableMask }, render: { fillStyle: '#ff00ff' } })
+        ])
+    }
+
+    if (poid2.position.x < window.innerWidth - 100) {
+        Composite.add(world, [
+            poid2 = Bodies.rectangle(window.innerWidth - 50, 150, 20, 20, { mass: 1, collisionFilter: { category: collisionMask | clickableMask }, render: { fillStyle: '#ff00ff' } })
+        ])
+    }
+
+    if (poid3.position.x < window.innerWidth - 100) {
+        Composite.add(world, [
+            poid3 = Bodies.rectangle(window.innerWidth - 50, 250, 30, 30, { mass: 2, collisionFilter: { category: collisionMask | clickableMask }, render: { fillStyle: '#0000ff' } })
+        ])
+    }
+
+    if (poid4.position.x < window.innerWidth - 100) {
+        Composite.add(world, [
+            poid4 = Bodies.rectangle(window.innerWidth - 50, 350, 40, 40, { mass: 5, collisionFilter: { category: collisionMask | clickableMask }, render: { fillStyle: '#0000ff' } })
+        ])
+    }
+
+    if (poid5.position.x < window.innerWidth - 100) {
+        Composite.add(world, [
+            poid5 = Bodies.rectangle(window.innerWidth - 50, 450, 50, 50, { mass: 10, collisionFilter: { category: collisionMask | clickableMask }, render: { fillStyle: '#0000ff' } })
+        ])
+    }
+
+
 
     window.requestAnimationFrame(Animate);
 }
-
 
