@@ -82,19 +82,19 @@ let asWon = false;
 //     render: { fillStyle: '#ff0000' }
 // }
 
-var poid1 = Bodies.rectangle(window.innerWidth - 50, 50, 10, 10, { mass: 0.5, collisionFilter: { category: collisionMask | clickableMask }, render: { fillStyle: '#ff00ff' } }); // poids 1
-var poid2 = Bodies.rectangle(window.innerWidth - 50, 150, 20, 20, { mass: 1, collisionFilter: { category: collisionMask | clickableMask }, render: { fillStyle: '#ff00ff' } }); // poids 1
-var poid3 = Bodies.rectangle(window.innerWidth - 50, 250, 30, 30, { mass: 2, collisionFilter: { category: collisionMask | clickableMask }, render: { fillStyle: '#0000ff' } }); // poids 1
-var poid4 = Bodies.rectangle(window.innerWidth - 50, 350, 40, 40, { mass: 5, collisionFilter: { category: collisionMask | clickableMask }, render: { fillStyle: '#0000ff' } }); // poids 1
-var poid5 = Bodies.rectangle(window.innerWidth - 50, 450, 50, 50, { mass: 10, collisionFilter: { category: collisionMask | clickableMask }, render: { fillStyle: '#0000ff' } }); // poids 1
+var poids1 = Bodies.rectangle(window.innerWidth - 50, 50, 10, 10, { mass: 0.5, collisionFilter: { category: collisionMask | clickableMask }, render: { fillStyle: '#ff00ff' } }); // poidss 1
+var poids2 = Bodies.rectangle(window.innerWidth - 50, 150, 20, 20, { mass: 1, collisionFilter: { category: collisionMask | clickableMask }, render: { fillStyle: '#ff00ff' } }); // poidss 1
+var poids3 = Bodies.rectangle(window.innerWidth - 50, 250, 30, 30, { mass: 2, collisionFilter: { category: collisionMask | clickableMask }, render: { fillStyle: '#0000ff' } }); // poidss 1
+var poids4 = Bodies.rectangle(window.innerWidth - 50, 350, 40, 40, { mass: 5, collisionFilter: { category: collisionMask | clickableMask }, render: { fillStyle: '#0000ff' } }); // poidss 1
+var poids5 = Bodies.rectangle(window.innerWidth - 50, 450, 50, 50, { mass: 10, collisionFilter: { category: collisionMask | clickableMask }, render: { fillStyle: '#0000ff' } }); // poidss 1
 
-var etagere1 = Bodies.rectangle(window.innerWidth - 50, 100, 100, 20, { isStatic: true, collisionFilter: { category: collisionMask }, render: { fillStyle: '#0000ff' } }); // poids 1
-var etagere2 = Bodies.rectangle(window.innerWidth - 50, 200, 100, 20, { isStatic: true, collisionFilter: { category: collisionMask }, render: { fillStyle: '#0000ff' } }); // poids 1
-var etagere3 = Bodies.rectangle(window.innerWidth - 50, 300, 100, 20, { isStatic: true, collisionFilter: { category: collisionMask }, render: { fillStyle: '#0000ff' } }); // poids 1
-var etagere4 = Bodies.rectangle(window.innerWidth - 50, 400, 100, 20, { isStatic: true, collisionFilter: { category: collisionMask }, render: { fillStyle: '#0000ff' } }); // poids 1
-var etagere5 = Bodies.rectangle(window.innerWidth - 50, 500, 100, 20, { isStatic: true, collisionFilter: { category: collisionMask }, render: { fillStyle: '#0000ff' } }); // poids 1
+var etagere1 = Bodies.rectangle(window.innerWidth - 50, 100, 100, 20, { isStatic: true, collisionFilter: { category: collisionMask }, render: { fillStyle: '#0000ff' } }); // poidss 1
+var etagere2 = Bodies.rectangle(window.innerWidth - 50, 200, 100, 20, { isStatic: true, collisionFilter: { category: collisionMask }, render: { fillStyle: '#0000ff' } }); // poidss 1
+var etagere3 = Bodies.rectangle(window.innerWidth - 50, 300, 100, 20, { isStatic: true, collisionFilter: { category: collisionMask }, render: { fillStyle: '#0000ff' } }); // poidss 1
+var etagere4 = Bodies.rectangle(window.innerWidth - 50, 400, 100, 20, { isStatic: true, collisionFilter: { category: collisionMask }, render: { fillStyle: '#0000ff' } }); // poidss 1
+var etagere5 = Bodies.rectangle(window.innerWidth - 50, 500, 100, 20, { isStatic: true, collisionFilter: { category: collisionMask }, render: { fillStyle: '#0000ff' } }); // poidss 1
 
-var ruche = Bodies.rectangle(120, 50, 150, 150, { mass: weight, collisionFilter: { category: collisionMask, mask: collisionMask}, render: { fillStyle: '#ff00ff' } }); // poids 1
+var ruche = Bodies.rectangle(120, 50, 150, 150, { mass: weight, collisionFilter: { category: collisionMask, mask: collisionMask}, render: { fillStyle: '#ff00ff' } }); // poidss 1
 
 Composite.add(world, [
     ground,
@@ -102,11 +102,11 @@ Composite.add(world, [
     edgeLeft,
     edgeRight,
 
-    poid1,
-    poid2,
-    poid3,
-    poid4,
-    poid5,
+    poids1,
+    poids2,
+    poids3,
+    poids4,
+    poids5,
 
     etagere1,
     etagere2,
@@ -184,33 +184,33 @@ function Animate() {
     Matter.Body.setAngularVelocity(edgeLeft, 0)
     Matter.Body.setAngularVelocity(edgeRight, 0)
 
-    if (poid1.position.x < window.innerWidth - 100) {
+    if (poids1.position.x < window.innerWidth - 100) {
         Composite.add(world, [
-            poid1 = Bodies.rectangle(window.innerWidth - 50, 50, 10, 10, { mass: 0.5, collisionFilter: { category: collisionMask | clickableMask }, render: { fillStyle: '#ff00ff' } })
+            poids1 = Bodies.rectangle(window.innerWidth - 50, 50, 10, 10, { mass: 0.5, collisionFilter: { category: collisionMask | clickableMask }, render: { fillStyle: '#ff00ff' } })
         ])
     }
 
-    if (poid2.position.x < window.innerWidth - 100) {
+    if (poids2.position.x < window.innerWidth - 100) {
         Composite.add(world, [
-            poid2 = Bodies.rectangle(window.innerWidth - 50, 150, 20, 20, { mass: 1, collisionFilter: { category: collisionMask | clickableMask }, render: { fillStyle: '#ff00ff' } })
+            poids2 = Bodies.rectangle(window.innerWidth - 50, 150, 20, 20, { mass: 1, collisionFilter: { category: collisionMask | clickableMask }, render: { fillStyle: '#ff00ff' } })
         ])
     }
 
-    if (poid3.position.x < window.innerWidth - 100) {
+    if (poids3.position.x < window.innerWidth - 100) {
         Composite.add(world, [
-            poid3 = Bodies.rectangle(window.innerWidth - 50, 250, 30, 30, { mass: 2, collisionFilter: { category: collisionMask | clickableMask }, render: { fillStyle: '#0000ff' } })
+            poids3 = Bodies.rectangle(window.innerWidth - 50, 250, 30, 30, { mass: 2, collisionFilter: { category: collisionMask | clickableMask }, render: { fillStyle: '#0000ff' } })
         ])
     }
 
-    if (poid4.position.x < window.innerWidth - 100) {
+    if (poids4.position.x < window.innerWidth - 100) {
         Composite.add(world, [
-            poid4 = Bodies.rectangle(window.innerWidth - 50, 350, 40, 40, { mass: 5, collisionFilter: { category: collisionMask | clickableMask }, render: { fillStyle: '#0000ff' } })
+            poids4 = Bodies.rectangle(window.innerWidth - 50, 350, 40, 40, { mass: 5, collisionFilter: { category: collisionMask | clickableMask }, render: { fillStyle: '#0000ff' } })
         ])
     }
 
-    if (poid5.position.x < window.innerWidth - 100) {
+    if (poids5.position.x < window.innerWidth - 100) {
         Composite.add(world, [
-            poid5 = Bodies.rectangle(window.innerWidth - 50, 450, 50, 50, { mass: 10, collisionFilter: { category: collisionMask | clickableMask }, render: { fillStyle: '#0000ff' } })
+            poids5 = Bodies.rectangle(window.innerWidth - 50, 450, 50, 50, { mass: 10, collisionFilter: { category: collisionMask | clickableMask }, render: { fillStyle: '#0000ff' } })
         ])
     }
 
