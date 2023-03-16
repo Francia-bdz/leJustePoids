@@ -1,9 +1,3 @@
-// doc
-// https://brm.io/matter-js/docs/
-
-// examples
-// https://brm.io/matter-js/demo/#car
-
 
 
 var Engine = Matter.Engine,
@@ -29,9 +23,9 @@ var render = Render.create({
     options: {
         width: window.innerWidth,
         height: 600,
-        showAngleIndicator: false,   // debug
-        showCollisions: false,       // debug
-        showVelocity: false,         // debug
+        showAngleIndicator: true,   // debug
+        showCollisions: true,       // debug
+        showVelocity: true,         // debug
         wireframes: false        // false pour afficher les textures
     }
 });
@@ -62,6 +56,7 @@ var yPlateau = 520;
 var wPlateau = 400;
 var hPlateau = 20;
 var plateau = Bodies.rectangle(xPlateau, yPlateau, wPlateau, hPlateau, { collisionFilter: { mask: ignoreMask }, render: { fillStyle: '#00ff00', opacity: 0.2 } })
+
 // Composites.group()
 var wSquare = 200;
 var hSquare = 10;
@@ -69,7 +64,7 @@ var xOffSeteL = -wPlateau / 2 + wSquare / 2;
 var xOffSeteR = +wPlateau / 2 - wSquare / 2;
 var yOffSet = -hPlateau / 2 - hSquare / 2;
 var edgeLeft = Bodies.rectangle(xPlateau + xOffSeteL, yPlateau + yOffSet, wSquare, hSquare, { friction: 1, collisionFilter: { mask: collisionMask } }); // bord gauche de la balance
-var edgeRight = Bodies.rectangle(xPlateau + xOffSeteR, yPlateau + yOffSet, wSquare + 150, hSquare, { friction: 1, collisionFilter: { mask: collisionMask } }); // bord droit de la balance
+var edgeRight = Bodies.rectangle(xPlateau + xOffSeteR, yPlateau + yOffSet, wSquare, hSquare, { friction: 1, collisionFilter: { mask: collisionMask } }); // bord droit de la balance
 
 
 // sol
@@ -101,7 +96,6 @@ var etagere5 = Bodies.rectangle(window.innerWidth - 50, 500, 100, 20, { isStatic
 
 var ruche = Bodies.rectangle(120, 50, 150, 150, { mass: weight, collisionFilter: { category: collisionMask }, render: { fillStyle: '#ff00ff' } }); // poids 1
 
-
 Composite.add(world, [
     ground,
     plateau,
@@ -124,7 +118,6 @@ Composite.add(world, [
 
     // poteaux central
     Bodies.rectangle(270, 300, 20, 600, { isStatic: true, collisionFilter: { mask: collisionMask }, render: { fillStyle: '#ff0000' } }),
-    Bodies.rectangle(150, 300, 300, 600, { isStatic: true, collisionFilter: { mask: ignoreMask }, render: { fillStyle: '#ff0000', opacity: 0 } }),
 
     // Bodies.circle(560, 100, 50, { density: 0.005 }),
 
@@ -145,7 +138,7 @@ Composite.add(world, [
     // assemblage des bords de la balance avec son plateau
     Constraint.create({
         bodyB: plateau, // sur quoi porte la contrainte
-        pointB: { x: xOffSeteR + 150, y: 0 },
+        pointB: { x: xOffSeteR + 50, y: 0 },
         bodyA: edgeRight,
         stiffness: 0, // raideur elasticité max 2 décroché min  
         length: 0 // disrtance entre le point d'encrage et le centre de gravité
@@ -224,6 +217,7 @@ function Animate() {
     majScore();
 
     window.requestAnimationFrame(Animate);
+
 }
 
 function randomIntFromInterval(min, max) { // min and max included 
@@ -236,7 +230,7 @@ function majScore() {
 
         setTimeout(() => {
             if (-0.02 < plateau.angle && plateau.angle < 0.02) {
-                if(!asWon){
+                if (!asWon) {
                     endGame();
                 }
             }
@@ -270,7 +264,7 @@ function endGame() {
 
     asWon = true;
     milliEnd = Date.now() - millisStart;
-    console.log(`seconds elapsed = ${Math.floor(milliEnd / 1000)}`);
+    console.log("seconds elapsed = " + milliEnd / 1000);
 
 
     menuFin.style.opacity = 1
@@ -279,6 +273,6 @@ function endGame() {
     canvas.style.filter = "blur(100px)"
     canvas.style.pointerEvents = "none"
 
-    expliFin.innerHTML = "Bravo, vous avez deviné que la balance pesait " + weight + "kg en "+ Math.floor(milliEnd / 1000) +" secondes !"
-
+    expliFin.innerHTML = "Bravo, vous avez deviné que la balance pesait " + weight + "kg en " + milliEnd / 1000 + " secondes !"
 }
+
