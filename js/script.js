@@ -39,6 +39,7 @@ var defaultMask = 1
 var clickableMask = 2
 var collisionMask = 3
 var ignoreMask = 8
+var herbeMask = 16
 
 
 var weight = randomIntFromInterval(17, 40)
@@ -49,7 +50,7 @@ console.log(weight)
 
 // plateau de la balance
 // Bodies.rectangle(xCentre, yCentre, largeur, hauteur[, options])
-var xPlateau = 400;
+var xPlateau = 380;
 var yPlateau = 520;
 var wPlateau = 400;
 var hPlateau = 20;
@@ -65,16 +66,19 @@ var hSquare = 10;
 var xOffSeteL = -wPlateau / 2 + wSquare / 2;
 var xOffSeteR = +wPlateau / 2 - wSquare / 2;
 var yOffSet = -hPlateau / 2 - hSquare / 2;
-var edgeLeft = Bodies.rectangle(xPlateau + xOffSeteL, yPlateau + yOffSet, wSquare, hSquare, { friction: 1, collisionFilter: { mask: clickableMask }, render: {sprite: {
+var edgeLeft = Bodies.rectangle(xPlateau + xOffSeteL, yPlateau + yOffSet, wSquare, hSquare, { collisionFilter: { mask: clickableMask }, render: {sprite: {
     texture: '/assets/plateau.png',
     xScale: 1,
     yScale: 1
   }}}); // bord gauche de la balance
-var edgeRight = Bodies.rectangle(xPlateau + xOffSeteR, yPlateau + yOffSet, wSquare, hSquare, { friction: 1, collisionFilter: { mask: clickableMask }, render: {sprite: {
+var edgeRight = Bodies.rectangle(xPlateau + xOffSeteR, yPlateau + yOffSet, wSquare, hSquare, { collisionFilter: { mask: clickableMask }, render: {sprite: {
     texture: '/assets/plateau.png',
     xScale: 1,
     yScale: 1
   }}} ); // bord droit de la balance
+
+  var edgeELeft = Bodies.rectangle(xPlateau + xOffSeteR, yPlateau + yOffSet, 10, 45, {mass: 0, collisionFilter: { mask: clickableMask }, render: {fillStyle: 'black'}}); // bord gauche de la balance
+  var edgeERight = Bodies.rectangle(xPlateau + xOffSeteL, yPlateau + yOffSet, 10, 45, {mass: 0, collisionFilter: { mask: clickableMask }, render:{fillStyle: 'black'}} ); // bord gauche de la balance
 
 
 // sol
@@ -118,13 +122,19 @@ var poids5 = Bodies.rectangle(window.innerWidth - 50, 450, 60, 60, { mass: 10, c
     yScale: 0.38
   }}}); 
 
-var etagere1 = Bodies.rectangle(window.innerWidth - 50, 100, 100, 10, { isStatic: true, collisionFilter: { category: collisionMask }, render: { fillStyle: 'transparent' } }); // poidss 1
-var etagere2 = Bodies.rectangle(window.innerWidth - 50, 200, 100, 10, { isStatic: true, collisionFilter: { category: collisionMask }, render: { fillStyle: '#0000ff00' } }); // poidss 1
-var etagere3 = Bodies.rectangle(window.innerWidth - 50, 300, 100, 10, { isStatic: true, collisionFilter: { category: collisionMask }, render: { fillStyle: '#0000ff00' } }); // poidss 1
-var etagere4 = Bodies.rectangle(window.innerWidth - 50, 400, 100, 10, { isStatic: true, collisionFilter: { category: collisionMask }, render: { fillStyle: '#0000ff00' } }); // poidss 1
-var etagere5 = Bodies.rectangle(window.innerWidth - 50, 500, 100, 10, { isStatic: true, collisionFilter: { category: collisionMask }, render: { fillStyle: '#0000ff00' } }); // poidss 1
+var etagere1 = Bodies.rectangle(window.innerWidth - 50, 100, 100, 10, { isStatic: true, collisionFilter: { category: collisionMask }, render: { fillStyle: 'transparent' } }); 
+var etagere2 = Bodies.rectangle(window.innerWidth - 50, 190, 100, 10, { isStatic: true, collisionFilter: { category: collisionMask }, render: { fillStyle: 'transparent' } }); 
+var etagere3 = Bodies.rectangle(window.innerWidth - 50, 290, 100, 10, { isStatic: true, collisionFilter: { category: collisionMask }, render: { fillStyle: 'transparent' } }); 
+var etagere4 = Bodies.rectangle(window.innerWidth - 50, 390, 100, 10, { isStatic: true, collisionFilter: { category: collisionMask }, render: { fillStyle: 'transparent' } }); 
+var etagere5 = Bodies.rectangle(window.innerWidth - 50, 500, 100, 10, { isStatic: true, collisionFilter: { category: collisionMask }, render: { fillStyle: 'transparent' } }); 
 
-var ruche = Bodies.rectangle(xPlateau, yPlateau-200, 150, 150, { mass: weight, collisionFilter: { category: collisionMask, mask: collisionMask}, render: { fillStyle: '#ff00ff' , sprite: {
+var herbe = Bodies.rectangle(860, 545, 100, 70, { isStatic: true, collisionFilter: { category: herbeMask }, render: { sprite: {
+    texture: '/assets/herbe.png',
+    xScale: 0.50,
+    yScale: 0.50
+  }}});
+
+var ruche = Bodies.rectangle(xPlateau, yPlateau-200, 150, 150, { mass: weight, collisionFilter: { category: collisionMask, mask: collisionMask}, render: { sprite: {
     texture: '/assets/ruche.png',
     xScale: 0.50,
     yScale: 0.40
@@ -132,8 +142,11 @@ var ruche = Bodies.rectangle(xPlateau, yPlateau-200, 150, 150, { mass: weight, c
 
 Composite.add(world, [
     ground,
+    herbe,
     plateau,
     edgeLeft,
+    // edgeELeft,
+    // edgeERight,
     edgeRight,
 
     poids1,
@@ -180,6 +193,24 @@ Composite.add(world, [
         bodyA: edgeRight,
         stiffness: 0, // raideur elasticité max 2 décroché min  
         length: 0 // disrtance entre le point d'encrage et le centre de gravité
+    }),
+
+    Constraint.create({
+        bodyB: edgeRight, // sur quoi porte la contrainte
+        pointB: { x: xOffSeteR +15, y: yOffSet },
+        bodyA: edgeELeft,
+        stiffness: 1, // raideur elasticité max 2 décroché min  
+        length: 0, // disrtance entre le point d'encrage et le centre de gravité
+        mass:9
+    }),
+
+    Constraint.create({
+        bodyB: edgeRight, // sur quoi porte la contrainte
+        pointB: { x: xOffSeteL -15, y: yOffSet },
+        bodyA: edgeERight,
+        stiffness: 1, // raideur elasticité max 2 décroché min  
+        length: 0, // disrtance entre le point d'encrage et le centre de gravité
+        mass:9
     })
 
 ]);
@@ -218,6 +249,8 @@ function Animate() {
     }
 
     Matter.Body.setInertia(edgeLeft, Infinity)
+    Matter.Body.setInertia(edgeELeft, Infinity)
+    Matter.Body.setInertia(edgeERight, Infinity)
     Matter.Body.setInertia(edgeRight, Infinity)
     Matter.Body.setInertia(ruche, Infinity)
     Matter.Body.setAngularVelocity(edgeLeft, 0)
