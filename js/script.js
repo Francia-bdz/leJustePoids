@@ -37,10 +37,10 @@ var runner = Runner.create();
 Runner.run(runner, engine);
 
 // Masks
-var defaultMask = 0x0001
-var clickableMask = 0x0002
-var collisionMask = 0x0004
-var ignoreMask = 0x0008
+var defaultMask = 1
+var clickableMask = 2
+var collisionMask = 3
+var ignoreMask = 8
 
 
 var weight = randomIntFromInterval(17, 40)
@@ -63,8 +63,8 @@ var hSquare = 10;
 var xOffSeteL = -wPlateau / 2 + wSquare / 2;
 var xOffSeteR = +wPlateau / 2 - wSquare / 2;
 var yOffSet = -hPlateau / 2 - hSquare / 2;
-var edgeLeft = Bodies.rectangle(xPlateau + xOffSeteL, yPlateau + yOffSet, wSquare, hSquare, { friction: 1, collisionFilter: { mask: collisionMask } }); // bord gauche de la balance
-var edgeRight = Bodies.rectangle(xPlateau + xOffSeteR, yPlateau + yOffSet, wSquare, hSquare, { friction: 1, collisionFilter: { mask: collisionMask } }); // bord droit de la balance
+var edgeLeft = Bodies.rectangle(xPlateau + xOffSeteL, yPlateau + yOffSet, wSquare, hSquare, { friction: 1, collisionFilter: { mask: clickableMask } }); // bord gauche de la balance
+var edgeRight = Bodies.rectangle(xPlateau + xOffSeteR, yPlateau + yOffSet, wSquare, hSquare, { friction: 1, collisionFilter: { mask: clickableMask } }); // bord droit de la balance
 
 
 // sol
@@ -94,7 +94,7 @@ var etagere3 = Bodies.rectangle(window.innerWidth - 50, 300, 100, 20, { isStatic
 var etagere4 = Bodies.rectangle(window.innerWidth - 50, 400, 100, 20, { isStatic: true, collisionFilter: { category: collisionMask }, render: { fillStyle: '#0000ff' } }); // poids 1
 var etagere5 = Bodies.rectangle(window.innerWidth - 50, 500, 100, 20, { isStatic: true, collisionFilter: { category: collisionMask }, render: { fillStyle: '#0000ff' } }); // poids 1
 
-var ruche = Bodies.rectangle(120, 50, 150, 150, { mass: weight, collisionFilter: { category: collisionMask }, render: { fillStyle: '#ff00ff' } }); // poids 1
+var ruche = Bodies.rectangle(120, 50, 150, 150, { mass: weight, collisionFilter: { category: collisionMask, mask: collisionMask}, render: { fillStyle: '#ff00ff' } }); // poids 1
 
 Composite.add(world, [
     ground,
@@ -151,7 +151,7 @@ var mouse = Mouse.create(render.canvas),
     mouseConstraint = MouseConstraint.create(engine, {
         mouse: mouse,
         constraint: {
-            collisionFilter: { mask: clickableMask },
+            collisionFilter: { category: clickableMask},
             stiffness: .2, // 0 les objets deviennent insaissiables
             render: {
                 visible: false
