@@ -92,33 +92,33 @@ let asWon = false;
 //     render: { fillStyle: '#ff0000' }
 // }
 
-var poids1 = Bodies.rectangle(window.innerWidth - 50, 50, 20, 25, { mass: 0.5, collisionFilter: { category: collisionMask | clickableMask }, render: { fillStyle: '#ff00ff' , sprite: {
-    texture: '/assets/pot25.svg',
-    xScale: 0.20,
-    yScale: 0.20
-  }}}); 
-var poids2 = Bodies.rectangle(window.innerWidth - 50, 150, 30, 35, { mass: 1, collisionFilter: { category: collisionMask | clickableMask }, render: { fillStyle: '#ff00ff', sprite: {
-    texture: '/assets/pot1.svg',
+var poids1 = Bodies.rectangle(window.innerWidth - 50, 50, 20, 25, { mass: 0.5, collisionFilter: { category: collisionMask | clickableMask }, render: { sprite: {
+    texture: '/assets/pot0_5.svg',
     xScale: 0.25,
     yScale: 0.25
+  }}}); 
+var poids2 = Bodies.rectangle(window.innerWidth - 50, 150, 30, 35, { mass: 1, collisionFilter: { category: collisionMask | clickableMask }, render: { sprite: {
+    texture: '/assets/pot1.svg',
+    xScale: 0.28,
+    yScale: 0.28
   } } }); 
-var poids3 = Bodies.rectangle(window.innerWidth - 50, 250, 40, 40, { mass: 2, collisionFilter: { category: collisionMask | clickableMask }, render: { fillStyle: '#0000ff', sprite: {
+var poids3 = Bodies.rectangle(window.innerWidth - 50, 250, 40, 40, { mass: 2, collisionFilter: { category: collisionMask | clickableMask }, render: {sprite: {
     texture: '/assets/pot2.svg',
     xScale: 0.30,
     yScale: 0.30
   } } }); 
-var poids4 = Bodies.rectangle(window.innerWidth - 50, 350, 50, 50, { mass: 5, collisionFilter: { category: collisionMask | clickableMask }, render: { fillStyle: '#0000ff', sprite: {
+var poids4 = Bodies.rectangle(window.innerWidth - 50, 350, 50, 50, { mass: 5, collisionFilter: { category: collisionMask | clickableMask }, render: { sprite: {
     texture: '/assets/pot5.svg',
     xScale: 0.35,
     yScale: 0.35
   } } }); 
-var poids5 = Bodies.rectangle(window.innerWidth - 50, 450, 60, 60, { mass: 10, collisionFilter: { category: collisionMask | clickableMask }, render: { fillStyle: '#0000ff', sprite: {
+var poids5 = Bodies.rectangle(window.innerWidth - 50, 450, 60, 60, { mass: 10, collisionFilter: { category: collisionMask | clickableMask }, render: { sprite: {
     texture: '/assets/pot10.svg',
-    xScale: 0.4,
-    yScale: 0.4
+    xScale: 0.38,
+    yScale: 0.38
   }}}); 
 
-var etagere1 = Bodies.rectangle(window.innerWidth - 50, 100, 100, 10, { isStatic: true, collisionFilter: { category: collisionMask }, render: { fillStyle: '#0000ff00' } }); // poidss 1
+var etagere1 = Bodies.rectangle(window.innerWidth - 50, 100, 100, 10, { isStatic: true, collisionFilter: { category: collisionMask }, render: { fillStyle: 'transparent' } }); // poidss 1
 var etagere2 = Bodies.rectangle(window.innerWidth - 50, 200, 100, 10, { isStatic: true, collisionFilter: { category: collisionMask }, render: { fillStyle: '#0000ff00' } }); // poidss 1
 var etagere3 = Bodies.rectangle(window.innerWidth - 50, 300, 100, 10, { isStatic: true, collisionFilter: { category: collisionMask }, render: { fillStyle: '#0000ff00' } }); // poidss 1
 var etagere4 = Bodies.rectangle(window.innerWidth - 50, 400, 100, 10, { isStatic: true, collisionFilter: { category: collisionMask }, render: { fillStyle: '#0000ff00' } }); // poidss 1
@@ -151,7 +151,7 @@ Composite.add(world, [
     ruche,
 
     // poteaux central
-    Bodies.rectangle(xPlateau, 300, 20, 600, { isStatic: true, collisionFilter: { mask: collisionMask }, render: { fillStyle: '#ff0000', sprite: {
+    Bodies.rectangle(xPlateau, 300, 20, 600, { isStatic: true, collisionFilter: { mask: collisionMask }, render: {sprite: {
         texture: '/assets/balance2.png',
         xScale: 1,
         yScale: 1
@@ -207,6 +207,7 @@ Animate();
 
 function Animate() {
 
+    //Position de la ruche
     Matter.Body.setPosition(ruche, Matter.Vector.create(xPlateau + xOffSeteL*1.45, ruche.position.y))
 
     if (plateau.angle < -0.02) {
@@ -226,35 +227,50 @@ function Animate() {
 
     if (poids1.position.x < window.innerWidth - 100) {
         Composite.add(world, [
-            poids1 = Bodies.rectangle(window.innerWidth - 50, 50, 10, 10, { mass: 0.5, collisionFilter: { category: collisionMask | clickableMask }, render: { fillStyle: '#ff00ff', sprite: {
-                texture: '/assets/pot25.svg',
-                xScale: 0.2,
-                yScale: 0.2
+            poids1 = Bodies.rectangle(window.innerWidth - 50, 50, 10, 10, { mass: 0.5, collisionFilter: { category: collisionMask | clickableMask }, render: { sprite: {
+                texture: '/assets/pot0_5.svg',
+                xScale: 0.25,
+                yScale: 0.25
               } } })
         ])
     }
 
     if (poids2.position.x < window.innerWidth - 100) {
         Composite.add(world, [
-            poids2 = Bodies.rectangle(window.innerWidth - 50, 150, 20, 20, { mass: 1, collisionFilter: { category: collisionMask | clickableMask }, render: { fillStyle: '#ff00ff' } })
+            poids2 = Bodies.rectangle(window.innerWidth - 50, 150, 20, 20, { mass: 1, collisionFilter: { category: collisionMask | clickableMask }, render: { sprite: {
+                texture: '/assets/pot1.svg',
+                xScale: 0.28,
+                yScale: 0.28
+              } }})
         ])
     }
 
     if (poids3.position.x < window.innerWidth - 100) {
         Composite.add(world, [
-            poids3 = Bodies.rectangle(window.innerWidth - 50, 250, 30, 30, { mass: 2, collisionFilter: { category: collisionMask | clickableMask }, render: { fillStyle: '#0000ff' } })
+            poids3 = Bodies.rectangle(window.innerWidth - 50, 250, 30, 30, { mass: 2, collisionFilter: { category: collisionMask | clickableMask },  render: { sprite: {
+                texture: '/assets/pot2.svg',
+                xScale: 0.3,
+                yScale: 0.3
+              } }})
         ])
     }
 
     if (poids4.position.x < window.innerWidth - 100) {
         Composite.add(world, [
-            poids4 = Bodies.rectangle(window.innerWidth - 50, 350, 40, 40, { mass: 5, collisionFilter: { category: collisionMask | clickableMask }, render: { fillStyle: '#0000ff' } })
+            poids4 = Bodies.rectangle(window.innerWidth - 50, 350, 40, 40, { mass: 5, collisionFilter: { category: collisionMask | clickableMask },  render: { sprite: {
+                texture: '/assets/pot5.svg',
+                xScale: 0.35,
+                yScale: 0.35
+              } }})
         ])
     }
-
     if (poids5.position.x < window.innerWidth - 100) {
         Composite.add(world, [
-            poids5 = Bodies.rectangle(window.innerWidth - 50, 450, 50, 50, { mass: 10, collisionFilter: { category: collisionMask | clickableMask }, render: { fillStyle: '#0000ff' } })
+            poids5 = Bodies.rectangle(window.innerWidth - 50, 450, 50, 50, { mass: 10, collisionFilter: { category: collisionMask | clickableMask },  render: { sprite: {
+                texture: '/assets/pot10.svg',
+                xScale: 0.38,
+                yScale: 0.38
+              } }})
         ])
     }
 
