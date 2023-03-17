@@ -24,7 +24,7 @@ var render = Render.create({
         width: window.innerWidth,
         background: '#BFDFF0',
         height: 600,
-        wireframes: false        // false pour afficher les textures
+        wireframes: false,       // false pour afficher les textures
     }
 });
 
@@ -43,9 +43,9 @@ var herbeMask = 16
 
 
 var weight = randomIntFromInterval(17, 40)
-if (randomIntFromInterval(0, 1) == 0) {
-    weight += 0.5
-}
+// if (randomIntFromInterval(0, 1) == 0) {
+//     weight += 0.5
+// }
 console.log(weight)
 
 // plateau de la balance
@@ -149,7 +149,7 @@ Composite.add(world, [
     // edgeERight,
     edgeRight,
 
-    poids1,
+    // poids1,
     poids2,
     poids3,
     poids4,
@@ -242,10 +242,10 @@ function Animate() {
     Matter.Body.setPosition(ruche, Matter.Vector.create(xPlateau + xOffSeteL*1.45, ruche.position.y))
 
     if (plateau.angle < -0.02) {
-        Matter.Body.setAngle(plateau, plateau.angle + 0.003)
+        Matter.Body.setAngle(plateau, plateau.angle + 0.01)
 
     } else if (plateau.angle > 0.02) {
-        Matter.Body.setAngle(plateau, plateau.angle - 0.003)
+        Matter.Body.setAngle(plateau, plateau.angle - 0.01)
     }
 
     Matter.Body.setInertia(edgeLeft, Infinity)
@@ -258,15 +258,15 @@ function Animate() {
 
     // Génération de poids
 
-    if (poids1.position.x < window.innerWidth - 100) {
-        Composite.add(world, [
-            poids1 = Bodies.rectangle(window.innerWidth - 50, 50, 10, 10, { mass: 0.5, collisionFilter: { category: collisionMask | clickableMask }, render: { sprite: {
-                texture: '/assets/pot0_5.svg',
-                xScale: 0.25,
-                yScale: 0.25
-              } } })
-        ])
-    }
+    // if (poids1.position.x < window.innerWidth - 100) {
+    //     Composite.add(world, [
+    //         poids1 = Bodies.rectangle(window.innerWidth - 50, 50, 10, 10, { mass: 0.5, collisionFilter: { category: collisionMask | clickableMask }, render: { sprite: {
+    //             texture: '/assets/pot0_5.svg',
+    //             xScale: 0.25,
+    //             yScale: 0.25
+    //           } } })
+    //     ])
+    // }
 
     if (poids2.position.x < window.innerWidth - 100) {
         Composite.add(world, [
@@ -368,3 +368,6 @@ function endGame() {
     expliFin.innerHTML = "Bravo, vous avez deviné que la balance pesait " + weight + "kg en " + milliEnd / 1000 + " secondes !"
 }
 
+function reload() {
+    window.location.reload();
+}
